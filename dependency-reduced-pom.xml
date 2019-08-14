@@ -18,7 +18,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.4.3</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -28,7 +28,15 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.cdtian.linux.command.CurlExample</mainClass>
+                  <manifestEntries>
+                    <Main-Class>com.cdtian.instrumentation.application.Launcher</Main-Class>
+                    <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                    <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                    <Agent-Class>com.cdtian.instrumentation.agent.MyInstrumentationAgent</Agent-Class>
+                    <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                    <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                    <Premain-Class>com.cdtian.instrumentation.agent.MyInstrumentationAgent</Premain-Class>
+                  </manifestEntries>
                 </transformer>
               </transformers>
             </configuration>
@@ -51,11 +59,18 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>com.sun</groupId>
+      <artifactId>tools</artifactId>
+      <version>${sun.tools.version}</version>
+      <scope>system</scope>
+      <systemPath>${java.home}/../lib/tools.jar</systemPath>
+    </dependency>
   </dependencies>
   <properties>
+    <sun.tools.version>1.8.0</sun.tools.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
-

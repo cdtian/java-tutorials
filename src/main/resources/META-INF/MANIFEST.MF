@@ -1,0 +1,5 @@
+Agent-Class: com.cdtian.instrumentation.agent.MyInstrumentationAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: com.cdtian.instrumentation.agent.MyInstrumentationAgent
+Main-Class: com.cdtian.instrumentation.application.Launcher

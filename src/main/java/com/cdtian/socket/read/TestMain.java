@@ -1,0 +1,35 @@
+package com.cdtian.socket.read;
+
+import java.util.concurrent.TimeUnit;
+
+public class TestMain {
+
+    public static void main(String[] args) {
+        Runnable runnable1 = () -> runServer();
+        Thread thread1 = new Thread(runnable1);
+        thread1.start();
+        //Wait for 10 seconds
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //Run client in a new thread
+        Runnable runnable2 = () -> runClient();
+
+        Thread thread2 = new Thread(runnable2);
+        thread2.start();
+    }
+
+    public static void runServer() {
+        //Run Server
+        Server server = new Server();
+        server.runServer(5555);
+    }
+
+    public static void runClient() {
+        //Run Client
+        Client client = new Client();
+        client.runClient("127.0.0.1", 5555);
+    }
+}
